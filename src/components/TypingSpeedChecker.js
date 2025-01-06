@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useCallback } from "react";
+import React, { useState, useEffect, useRef, useCallback, useMemo } from "react"; // Added useMemo import
 import { db } from "../firebaseConfig";
 import { doc, getDoc } from "firebase/firestore";
 import { auth } from "../firebaseConfig";
@@ -17,6 +17,7 @@ const TypingSpeedChecker = () => {
 
   const intervalRef = useRef(null);
 
+  // Memoize sentences object to avoid unnecessary re-renders
   const sentences = useMemo(() => ({
     easy: [
       "Canada is south of Detroit.",
@@ -151,7 +152,9 @@ const TypingSpeedChecker = () => {
       const userRef = doc(db, "users", userId);
       const userDoc = await getDoc(userRef);
       if (userDoc.exists()) {
-        setSavedResults(userDoc.data().scores || []);
+        // Assuming `userDoc.data().scores` is what you want to fetch and use
+        const savedResults = userDoc.data().scores || [];
+        console.log(savedResults); // You can later display this if required
       }
     };
 
