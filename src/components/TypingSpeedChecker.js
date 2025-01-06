@@ -14,11 +14,10 @@ const TypingSpeedChecker = () => {
   const [isTestActive, setIsTestActive] = useState(false);
   const [timer, setTimer] = useState(0);
   const [timeRemaining, setTimeRemaining] = useState(0);
-  const [savedResults, setSavedResults] = useState([]);
 
   const intervalRef = useRef(null);
 
-  const sentences = {
+  const sentences = useMemo(() => ({
     easy: [
       "Canada is south of Detroit.",
       "Bats are the only mammals that can actually fly.",
@@ -38,7 +37,7 @@ const TypingSpeedChecker = () => {
       "The new software update includes several bug fixes and improved performance.",
       "React allows developers to build user interfaces efficiently.",
     ],
-  };
+  }), []); // Memoize the sentences object
 
   // Function to get a random sentence based on difficulty
   const getRandomSentence = useCallback(() => {
